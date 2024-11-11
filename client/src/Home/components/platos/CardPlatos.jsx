@@ -1,14 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useCarrito } from "../../../context/CarritoContext";
-import { useProductos } from "../../../context/ProductosContext";
 
 export const CardPlatos = ({ data }) => {
   const { agregarCarrito, checkingProductoCarrito, deleteProducto } =
     useCarrito();
-    const { loading } = useProductos();
-    
-    
+
   return (
     <>
       {data.length > 0 ? (
@@ -125,7 +122,7 @@ export const CardPlatos = ({ data }) => {
           );
         })
       ) : (
-        <h3>No hay datos</h3>
+        <h3 className="font-bold text-xl">Sin productos</h3>
       )}
     </>
   );

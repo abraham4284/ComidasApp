@@ -112,7 +112,7 @@ export const CardProductos = ({ data }) => {
           );
         })
       ) : (
-        <h3>No hay datos</h3>
+        <h3 className="font-bold text-xl">Sin productos</h3>
       )}
     </>
   );

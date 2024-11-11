@@ -20,6 +20,9 @@ export const TableDomicilios = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [filterDomicilios, setFilterDomicilios] = useState([]);
+  const [busquedaActiva, setBusquedaActiva] = useState(false);
+
   const getDomiciliosUsuarios = async () => {
     try {
       const { data } = await getIdDomiciliosByUsuarios();
@@ -113,9 +116,27 @@ export const TableDomicilios = ({
     getDomiciliosUsuarios();
   }, []);
 
+
+  const handleInputDomicilios = (e)=>{
+    e.preventDefault();
+    const searchInput = e.target.value.toLocaleLowerCase();
+    setBusquedaActiva(true);
+    if (!searchInput) {
+      setFilterDomicilios([]);
+      setBusquedaActiva(false);
+    } else {
+      const filtro = domicilios.filter((el) => {
+        return el.calle.toLocaleLowerCase().includes(searchInput);
+      });
+      setFilterDomicilios(filtro);
+    }
+  }
+
+  const filterDomiciliosDef = busquedaActiva ? filterDomicilios : domicilios;
+
   return (
     <div className="mt-5 max-w-7xl m-auto">
-      <SearchPlatos placeholder={"Buscar por nombre de calle"} />
+      <SearchPlatos placeholder={"Buscar por nombre de calle"} handleInputSearch={handleInputDomicilios} />
       <div className="relative overflow-auto">
         <div className="relative overflow-x-auto">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -146,8 +167,8 @@ export const TableDomicilios = ({
                     <Spiner />{" "}
                   </td>
                 </tr>
-              ) : domicilios.length > 0 ? (
-                domicilios.map((el) => {
+              ) : filterDomiciliosDef.length > 0 ? (
+                filterDomiciliosDef.map((el) => {
                   return (
                     <tr
                       key={el.idDomicilios}
