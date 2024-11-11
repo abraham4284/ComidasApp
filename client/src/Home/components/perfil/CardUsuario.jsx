@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { ModalUsuario } from "./usuario/ModalUsuario";
-import { Spiner } from "../../../components/Spiner";
 
 export const CardUsuario = ({ toggleModal, setDataToEdit }) => {
   const { usuarios, getIdUsuarios, usuariosIndividual, loadingIndividual } =
@@ -36,7 +35,7 @@ export const CardUsuario = ({ toggleModal, setDataToEdit }) => {
     <div className="max-w-sm m-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div className="flex flex-col items-center pb-10">
         {loadingIndividual ? (
-          <Spiner />
+           <h4>Cargando...</h4>
         ) : (
           <img
             className="w-36 h-36 mb-3 mt-5 rounded-full shadow-lg object-cover"

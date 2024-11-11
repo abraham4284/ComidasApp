@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNegocios } from "../context/NegociosContext";
+import { SpinnerFinalizarCompra } from "./Spiner";
 
 export const Footer = () => {
-  const { getNegociosByUsuario, negocios } = useNegocios();
+  const { getNegociosByUsuario, negocios, loading } = useNegocios();
 
   useEffect(() => {
     getNegociosByUsuario();
@@ -19,11 +20,16 @@ export const Footer = () => {
             to="/"
             className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
           >
-            <img
-              src={img}
-              className="h-8 w-auto rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-              alt={nombre}
-            />
+            {loading ? (
+              <SpinnerFinalizarCompra />
+            ) : (
+              <img
+                src={img}
+                className="h-8 w-auto rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                alt={nombre}
+              />
+            )}
+
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               {nombre}
             </span>

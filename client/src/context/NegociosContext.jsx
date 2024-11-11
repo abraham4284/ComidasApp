@@ -27,6 +27,7 @@ export const NegociosProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   const [deteccionDeCambio, setDeteccionDeCambio] = useState(false);
+  const [estadoCarga, setEstadoCarga] = useState(0);
 
   const getNegociosByUsuario = async () => {
     try {
@@ -51,24 +52,31 @@ export const NegociosProvider = ({ children }) => {
 
   const updateNegocio = async (id, dataNegocio) => {
     try {
+      setEstadoCarga(1);
       const { data } = await updateNegociosRequest(id, dataNegocio);
       if (!data) {
         setNegocios(null);
         setLoading(false);
         setError(data);
+        setEstadoCarga(3);
+      } else {
+        setEstadoCarga(2);
+        let newData = negocios.map((el) =>
+          el.idNegocios === id ? dataNegocio : el
+        );
+        setNegocios(newData);
+        setLoading(false);
+        setError(null);
       }
-      let newData = negocios.map((el) =>
-        el.idNegocios === id ? dataNegocio : el
-      );
-      setNegocios(newData);
-      setLoading(false);
-      setError(null);
+
+      setEstadoCarga(0);
     } catch (error) {
       console.log({
         error: error.message,
         errorCompleto: error,
         message: "Error en getProductos updateNegocio",
       });
+      setEstadoCarga(3);
     }
   };
 
@@ -85,20 +93,28 @@ export const NegociosProvider = ({ children }) => {
           denyButtonText: `No confirmar`,
         }).then(async (result) => {
           if (result.isConfirmed) {
+            setEstadoCarga(1);
             const { data } = await updateEstadoNegociosRequest(id, { estado });
             if (!data) {
               setNegocios(null);
               setLoading(false);
               setError(data);
+            } else {
+              setEstadoCarga(2);
+              let newData = negocios.map((el) =>
+                el.idNegocios === id ? data : el
+              );
+              setNegocios(newData);
+              setNegocios(data);
+              setDeteccionDeCambio(true);
+              setLoading(false);
+              setError(null);
+              setEstadoCarga(2);
+              await getNegociosByUsuario();
+              Swal.fire("Negocio cerrado con exito", "", "success");
             }
-
-            setNegocios(data);
-            setDeteccionDeCambio(true);
-            setLoading(false);
-            setError(null);
-            await getNegociosByUsuario();
-            Swal.fire("Negocio cerrado con exito", "", "success");
             setDeteccionDeCambio(false);
+            setEstadoCarga(0);
           } else if (result.isDenied) {
             Swal.fire("El negocio no se cerro", "", "info");
           }
@@ -113,20 +129,26 @@ export const NegociosProvider = ({ children }) => {
           denyButtonText: `No confirmar`,
         }).then(async (result) => {
           if (result.isConfirmed) {
+            setEstadoCarga(1);
             const { data } = await updateEstadoNegociosRequest(id, { estado });
             if (!data) {
               setNegocios(null);
               setLoading(false);
               setError(data);
+            } else {
+              let newData = negocios.map((el) =>
+                el.idNegocios === id ? data : el
+              );
+              setNegocios(newData);
+              setDeteccionDeCambio(true);
+              setLoading(false);
+              setError(null);
+              setEstadoCarga(2);
+              await getNegociosByUsuario();
             }
-
-            setNegocios(data);
-            setDeteccionDeCambio(true);
-            setLoading(false);
-            setError(null);
-            await getNegociosByUsuario();
             Swal.fire("Negocio abierto con exito", "", "success");
             setDeteccionDeCambio(false);
+            setEstadoCarga(0);
           } else if (result.isDenied) {
             Swal.fire("La accion no se completó", "", "info");
           }
@@ -138,9 +160,9 @@ export const NegociosProvider = ({ children }) => {
         errorCompleto: error,
         message: "Error en updateEstadoNegocio ",
       });
+      setEstadoCarga(3);
     }
   };
-
 
   useEffect(() => {
     // Cargar datos iniciales
@@ -158,6 +180,7 @@ export const NegociosProvider = ({ children }) => {
         loading,
         error,
         deteccionDeCambio,
+        estadoCarga,
         getNegociosByUsuario,
         updateNegocio,
         updateEstadoNegocio,

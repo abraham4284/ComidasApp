@@ -12,6 +12,7 @@ import { createVentasRequest } from "../../../api/ventas/ventas";
 import { useNavigate } from "react-router-dom";
 import { formatearNumero } from "../../../helpers/formatearNumero";
 import { ModalCarrito } from "./ModalCarrito";
+import { SpinnerFinalizarCompra } from "../../../components/Spiner";
 
 export const CardFinalizarCompra = () => {
   const [domicilios, setDomicilios] = useState([]);
@@ -22,6 +23,8 @@ export const CardFinalizarCompra = () => {
   const [descripcion, setDescripcion] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+  const [estadoVenta, setEstadoVenta] = useState(0);
 
   const { compraData, handleResetCarrito, totalCarrito } = useCarrito();
   const { usuarios } = useAuth();
@@ -113,6 +116,8 @@ export const CardFinalizarCompra = () => {
       return;
     }
 
+    setEstadoVenta(1);
+
     const datos = {
       carrito: compraData,
       idUsuarios: usuarios.idUsuarios,
@@ -122,6 +127,7 @@ export const CardFinalizarCompra = () => {
     };
     const { data } = await createVentasRequest(datos);
     if (data.message === "Venta Registrada") {
+      setEstadoVenta(2);
       navigate("/");
       Swal.fire({
         title: "Desea ver su compra?",
@@ -136,8 +142,11 @@ export const CardFinalizarCompra = () => {
         }
       });
     }
+    setEstadoVenta(0);
     handleResetCarrito();
   };
+
+  console.log(estadoVenta);
 
   return (
     <div className="max-w-6xl m-auto mt-5 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 md:w-full">
@@ -146,9 +155,9 @@ export const CardFinalizarCompra = () => {
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           Total del carrito
         </h5>
-        <button 
-        className="flex items-center gap-1 px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        onClick={toggleModal}
+        <button
+          className="flex items-center gap-1 px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          onClick={toggleModal}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -295,30 +304,34 @@ export const CardFinalizarCompra = () => {
         <button
           className="inline-flex items-center px-3 py-2 mt-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           onClick={BtnFinalizarCompra}
+          disabled={estadoVenta === 1 && true}
         >
-          Finalizar
-          <svg
-            className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 14 10"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M1 5h12m0 0L9 1m4 4L9 9"
-            />
-          </svg>
+          {estadoVenta === 1 ? (
+            <SpinnerFinalizarCompra />
+          ) : (
+            <>
+              Finalizar
+              <svg
+                className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 10"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M1 5h12m0 0L9 1m4 4L9 9"
+                />
+              </svg>
+            </>
+          )}
         </button>
       </div>
       {/* End Finalizar Compra */}
-      <ModalCarrito 
-       isOpen={isOpen}
-       closeModal={closeModal}
-      />
+      <ModalCarrito isOpen={isOpen} closeModal={closeModal} />
     </div>
   );
 };

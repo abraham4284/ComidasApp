@@ -23,7 +23,12 @@ export const useProductos = () => {
 
 export const ProductosProvider = ({ children }) => {
   const [productos, setProductos] = useState([]);
+  const [productosComidas, setProductosComidas] = useState([]);
+  const [productosBebidas, setProductosBebidas] = useState([]);
+
   const [loading, setLoading] = useState(true);
+  const [loadingComidas, setLoadingComidas] = useState(true);
+  const [loadingBebidas, setLoadingBebidas] = useState(true);
   const [error, setError] = useState(null);
 
   const [deteccionCambio, setDeteccionCambio] = useState(false);
@@ -53,13 +58,13 @@ export const ProductosProvider = ({ children }) => {
     try {
       const { data } = await getProductosComidasRequest();
       if (!data) {
-        setProductos(null);
-        setLoading(false);
+        setProductosComidas(null);
+        setLoadingComidas(false);
         setError(data);
       }
 
-      setProductos(data);
-      setLoading(false);
+      setProductosComidas(data);
+      setLoadingComidas(false);
       setError(null);
     } catch (error) {
       console.log({
@@ -74,13 +79,13 @@ export const ProductosProvider = ({ children }) => {
     try {
       const { data } = await getProductosBebidasRequest();
       if (!data) {
-        setProductos(null);
-        setLoading(false);
+        setProductosBebidas(null);
+        setLoadingBebidas(false);
         setError(data);
       }
 
-      setProductos(data);
-      setLoading(false);
+      setProductosBebidas(data);
+      setLoadingBebidas(false);
       setError(null);
     } catch (error) {
       console.log({
@@ -220,17 +225,24 @@ export const ProductosProvider = ({ children }) => {
     }
   };
 
+  const resetGetProductos = () => {
+    setProductos([]);
+  };
 
-  const onDeteccionCambio = (data)=>{
-    if(!data) return;
-    setDeteccionCambio(data)
-  } 
+  const onDeteccionCambio = (data) => {
+    if (!data) return;
+    setDeteccionCambio(data);
+  };
 
   return (
     <ProductosContext.Provider
       value={{
         productos,
+        productosComidas,
+        productosBebidas,
         loading,
+        loadingComidas,
+        loadingBebidas,
         error,
         deteccionCambio,
         getProductos,
@@ -241,7 +253,8 @@ export const ProductosProvider = ({ children }) => {
         updateEstadoProductos,
         updateStockProductos,
         deleteProductos,
-        onDeteccionCambio
+        onDeteccionCambio,
+        resetGetProductos,
       }}
     >
       {children}

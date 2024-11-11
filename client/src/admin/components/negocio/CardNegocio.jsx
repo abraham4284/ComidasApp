@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNegocios } from "../../../context/NegociosContext";
-import { Spiner } from "../../../components/Spiner";
+import { Spiner, SpinnerFinalizarCompra } from "../../../components/Spiner";
 import { ModalNegocios } from "./ModalNegocios";
-import Swal from "sweetalert2";
 
 export const CardNegocio = () => {
-  const { negocios, getNegociosByUsuario, loading, updateEstadoNegocio } = useNegocios();
+  const {
+    negocios,
+    getNegociosByUsuario,
+    loading,
+    updateEstadoNegocio,
+    estadoCarga,
+  } = useNegocios();
   const [isOpen, setIsOpen] = useState(false);
   const [dataToEdit, setDataToEdit] = useState(null);
 
@@ -21,9 +26,6 @@ export const CardNegocio = () => {
     setDataToEdit(data);
     toggleModal();
   };
-
-  
-
 
   useEffect(() => {
     getNegociosByUsuario();
@@ -91,15 +93,38 @@ export const CardNegocio = () => {
                     </button>
 
                     {el.estado === "Abierto" ? (
-                      <button 
-                      className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                      onClick={()=> updateEstadoNegocio(el.idNegocios,"Cerrado","Abierto")}
-                      >
-                        Cerrar negocio
+                      estadoCarga === 1 ? (
+                        <button className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                          <SpinnerFinalizarCompra />
+                        </button>
+                      ) : (
+                        <button
+                          className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                          onClick={() =>
+                            updateEstadoNegocio(
+                              el.idNegocios,
+                              "Cerrado",
+                              "Abierto"
+                            )
+                          }
+                        >
+                          Cerrar negocio
+                        </button>
+                      )
+                    ) : estadoCarga === 1 ? (
+                      <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        <SpinnerFinalizarCompra />
                       </button>
                     ) : (
-                      <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                      onClick={()=> updateEstadoNegocio(el.idNegocios,"Abierto","Cerrado")}
+                      <button
+                        className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                        onClick={() =>
+                          updateEstadoNegocio(
+                            el.idNegocios,
+                            "Abierto",
+                            "Cerrado"
+                          )
+                        }
                       >
                         Abrir negocio
                       </button>

@@ -5,15 +5,18 @@ import { useProductos } from "../../../context/ProductosContext";
 import { Spiner } from "../../../components/Spiner";
 
 export const HomePlatosPages = () => {
-  const { getProductosComidas, productos, loading } = useProductos();
+  const {
+    getProductosComidas,
+    productosComidas,
+    loadingComidas,
+  } = useProductos();
   const [filterPlatos, setFilterPlatos] = useState([]);
   const [busquedaActiva, setBusquedaActiva] = useState(false);
 
   useEffect(() => {
     getProductosComidas();
+
   }, []);
-
-
 
   const handleInpuPlatos = (e) => {
     e.preventDefault();
@@ -23,23 +26,25 @@ export const HomePlatosPages = () => {
       setFilterPlatos([]);
       setBusquedaActiva(false);
     } else {
-      const filtro = productos.filter((el) => {
+      const filtro = productosComidas.filter((el) => {
         return el.nombre.toLocaleLowerCase().includes(searchInput);
       });
       setFilterPlatos(filtro);
     }
   };
 
-  const filterPlatosDef = busquedaActiva ? filterPlatos : productos;
+  const filterPlatosDef = busquedaActiva ? filterPlatos : productosComidas;
 
+  console.log(loadingComidas, "soy loading platos");
   return (
     <section className="p-4">
-      <SearchPlatos handleInputSearch={handleInpuPlatos} placeholder={"Busque por nombre del plato"} />
+      <SearchPlatos
+        handleInputSearch={handleInpuPlatos}
+        placeholder={"Busque por nombre del plato"}
+      />
       <div className="m-auto grid max-w-6xl gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {loading ? (
-          <div
-            className="col-span-12 m-auto "
-          >
+        {loadingComidas ? (
+          <div className="col-span-12 m-auto ">
             <Spiner />
           </div>
         ) : (

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getIdDomiciliosRequest } from "../../../api/domicilios/domicilios";
+import { Spiner, SpinnerFinalizarCompra } from "../../../components/Spiner";
 
 export const ModalTableUsuarios = ({ isOpen, closeModal, dataUser }) => {
   const { idUsuarios, img, nombre, apellido, username } = dataUser
@@ -9,33 +10,35 @@ export const ModalTableUsuarios = ({ isOpen, closeModal, dataUser }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const domiciliosByUser = async (id) => {
-      try {
-        const { data } = await getIdDomiciliosRequest(id);
-        if (!data) {
-          setDomicilios(null);
-          setLoading(false);
-          setError(data);
-        }
-        setDomicilios(data);
+  const domiciliosByUser = async (id) => {
+    try {
+      const { data } = await getIdDomiciliosRequest(id);
+      if (!data) {
+        setDomicilios(null);
         setLoading(false);
-        setError(null);
-      } catch (error) {
-        console.log({
-          error: error.message,
-          errorCompleto: error,
-          message: "Error en domiciliosByUser en ModalTableUsuarios",
-        });
+        setError(data);
       }
-    };
-
-    domiciliosByUser(idUsuarios);
-
+      setDomicilios(data);
+      setLoading(false);
+      setError(null);
+    } catch (error) {
+      console.log({
+        error: error.message,
+        errorCompleto: error,
+        message: "Error en domiciliosByUser en ModalTableUsuarios",
+      });
+    }
+  };
+  useEffect(() => {
+    if (isOpen && idUsuarios) {
+      setLoading(true);
+      domiciliosByUser(idUsuarios);
+    }
     return () => {
       setDomicilios([]);
     };
-  }, [isOpen]);
+  }, [isOpen, idUsuarios]);
+
 
   return (
     <>
@@ -113,7 +116,16 @@ export const ModalTableUsuarios = ({ isOpen, closeModal, dataUser }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {domicilios.length > 0 ? (
+                        {loading ? (
+                          <tr className="">
+                            <td
+                              scope="row"
+                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                            >
+                              <SpinnerFinalizarCompra />
+                            </td>
+                          </tr>
+                        ) : domicilios.length > 0 ? (
                           domicilios.map((el) => {
                             return (
                               <tr

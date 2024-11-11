@@ -2,6 +2,10 @@ import React, { useEffect } from "react";
 import { useForm } from "../../../hooks/useForm";
 import Swal from "sweetalert2";
 import { useNegocios } from "../../../context/NegociosContext";
+import {
+  SpinnerFinalizarCompra,
+  SpinnerUpdate,
+} from "../../../components/Spiner";
 
 const initialForm = {
   idNegocios: null,
@@ -25,7 +29,7 @@ export const ModalNegocios = ({ isOpen, closeModal, dataToEdit }) => {
     formSate,
   } = useForm(initialForm);
 
-  const { updateNegocio } = useNegocios();
+  const { updateNegocio, estadoCarga } = useNegocios();
 
   const handleSelectedRubro = (e) => {
     setFormSate({
@@ -158,12 +162,20 @@ export const ModalNegocios = ({ isOpen, closeModal, dataToEdit }) => {
                     />
                   </div>
 
-                  <button
-                    type="submit"
-                    className="w-full focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
-                  >
-                    Confirmar
-                  </button>
+                  {estadoCarga === 1 ? (
+                    <button className="w-full focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900">
+                      <span className="flex justify-center">
+                        <SpinnerUpdate />
+                      </span>
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="w-full focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
+                    >
+                      Confirmar
+                    </button>
+                  )}
                 </form>
               </div>
             </div>

@@ -365,6 +365,8 @@ export const VentasProvider = ({ children }) => {
   };
 
 
+
+
   const handleResetVentas = () =>{
     setVentas([]);
   }
@@ -419,6 +421,8 @@ export const VentasProvider = ({ children }) => {
         setLoadingDetalles,
         handleResetVentas,
         handleResetDetalleVentas,
+        setLoading,
+        setLoadingDetalles,
 
         handleBeforePrint,
         handleAfterPrint,
