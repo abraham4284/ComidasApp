@@ -29,53 +29,64 @@ export const AuthProvider = ({ children }) => {
   const [loadingIndividual, setLoadingIndividual] = useState(true);
   const [isAutenticated, setIsAutenticated] = useState(false);
 
+  const [estadoCarga, setEstadoCarga] = useState(0);
+
   const [error, setError] = useState(null);
   const [errorAll, setErrorAll] = useState(null);
 
   const registro = async (dataUser) => {
     try {
+      setEstadoCarga(1);
       const { data } = await registroRequest(dataUser);
       if (!data) {
         setUsuarios(null);
         setLoading(false);
         setIsAutenticated(false);
         setError(data);
+        setEstadoCarga(3);
       } else {
+        setEstadoCarga(2);
         setUsuarios(data);
         setIsAutenticated(true);
         setLoading(false);
         setError(null);
       }
+      setEstadoCarga(0);
     } catch (error) {
       console.log({
         error: error.message,
         errorCompleto: error,
         message: "Error en registro AuthContext",
       });
+      setEstadoCarga(3);
     }
   };
 
   const login = async (dataUser) => {
     try {
+      setEstadoCarga(1);
       const { data } = await loginRequest(dataUser);
-      console.log(data, "data AuthContext");
       if (!data) {
         setUsuarios(null);
         setLoading(false);
         setIsAutenticated(false);
         setError(data);
+        setEstadoCarga(3);
       } else {
+        setEstadoCarga(2);
         setUsuarios(data);
         setIsAutenticated(true);
         setLoading(false);
         setError(null);
       }
+      setEstadoCarga(0);
     } catch (error) {
       console.log({
         error: error.message,
         errorCompleto: error,
         message: "Error en Login AuthContext",
       });
+      setEstadoCarga(3);
     }
   };
 
@@ -187,8 +198,6 @@ export const AuthProvider = ({ children }) => {
     checkLogin();
   }, []);
 
-
-
   return (
     <AuthContext.Provider
       value={{
@@ -198,6 +207,7 @@ export const AuthProvider = ({ children }) => {
         loading,
         loadingIndividual,
         loadingAll,
+        estadoCarga,
         isAutenticated,
         error,
         errorAll,
@@ -206,7 +216,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         getIdUsuarios,
         updateUsuariosPerfil,
-        getUsuariosAll
+        getUsuariosAll,
       }}
     >
       {children}

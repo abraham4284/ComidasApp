@@ -35,7 +35,6 @@ export const HomePlatosPages = () => {
 
   const filterPlatosDef = busquedaActiva ? filterPlatos : productosComidas;
 
-  console.log(loadingComidas, "soy loading platos");
   return (
     <section className="p-4">
       <SearchPlatos

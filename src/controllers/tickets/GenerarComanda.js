@@ -48,8 +48,8 @@ export const generarComada = async (req, res) => {
 
     const doc = new PDF({
       bufferPages: true,
-      size: [250, 700], // Aumenta el tamaño para más espacio
-      margins: { top: 20, bottom: 10, left: 10, right: 10 }, // Márgenes ajustados
+      size: [226, 600], // Tamaño para papel de 80mm de ancho, altura ajustable
+      margins: { top: 10, bottom: 10, left: 10, right: 10 }, // Márgenes pequeños
     });
 
     res.writeHead(200, {
@@ -62,23 +62,23 @@ export const generarComada = async (req, res) => {
     doc.setDocumentHeader(
       { height: "15%" }, // Aumenta el tamaño del encabezado para más espacio
       () => {
-        doc.fontSize(12).text("Comandas", { width: 230, align: "center" });
+        doc.fontSize(12).text("Comandas", { width: 206, align: "center" });
         doc.moveDown(0.3);
         doc.fontSize(9);
 
-        doc.text(`Nº: ${Npedido}`, { width: 230, align: "left" });
+        doc.text(`Nº: ${Npedido}`, { width: 206, align: "left" });
         doc.moveDown(0.3);
         doc.text(`Fecha y hora: ${fecha} ${hora}`, {
-          width: 230,
+          width: 206,
           align: "left",
         });
         doc.moveDown(0.3);
         doc.text(`Cliente: ${apellido} ${nombre}`, {
-          width: 230,
+          width: 206,
           align: "left",
         });
         doc.moveDown(0.3);
-        doc.text(`Pedido: ${descripcion}`, { width: 230, align: "left" });
+        doc.text(`Pedido: ${descripcion}`, { width: 206, align: "left" });
       }
     );
 
@@ -101,25 +101,25 @@ export const generarComada = async (req, res) => {
         headFont: "Helvetica-Bold",
         headFontSize: 6,
         bodyFontSize: 5,
-        marginTop: 15, // Añade espacio entre el encabezado y la tabla
       }
     );
 
-    doc.setDocumentFooter({ height: "10%" }, () => {
-      doc
-        .fontSize(8)
-        .text("Muchas gracias por su compra", 0, doc.page.height - 60, {
-          align: "center",
-        });
-      doc
-        .fontSize(7)
-        .text(
+    doc.setDocumentFooter(
+      {
+        height: "10%",
+      },
+      () => {
+        doc.text(
           "</> AbrahamTech | Soluciones Tecnologicas",
           0,
-          doc.page.height - 40,
-          { align: "center" }
+          doc.page.height - 380,
+          {
+            align: "center",
+            marginTop: 5,
+          }
         );
-    });
+      }
+    );
 
     doc.render();
     doc.end();

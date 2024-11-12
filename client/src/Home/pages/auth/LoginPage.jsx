@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useForm } from "../../../hooks/useForm";
 import { useAuth } from "../../../context/AuthContext";
-import { Spiner } from "../../../components/Spiner";
+import { Spiner, SpinnerFinalizarCompra } from "../../../components/Spiner";
 
 const initialForm = {
   username: "",
@@ -13,7 +13,7 @@ const initialForm = {
 export const LoginPage = () => {
   const { username, password, onInputChange, onResetForm } =
     useForm(initialForm);
-  const { login, isAutenticated, usuarios, loading } = useAuth();
+  const { login, isAutenticated, usuarios, loading, estadoCarga } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -61,7 +61,7 @@ export const LoginPage = () => {
                   type="text"
                   name="username"
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="name@company.com"
+                  placeholder="ejemplo22"
                   value={username}
                   onChange={onInputChange}
                 />
@@ -84,12 +84,24 @@ export const LoginPage = () => {
                 />
               </div>
               <div className="flex items-center justify-between"></div>
-              <button
-                type="submit"
-                className="w-full text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-              >
-                Sign in
-              </button>
+              {estadoCarga === 1 ? (
+                <button
+                  type="submit"
+                  className="w-full text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                >
+                  <span className="flex justify-center">
+                    <SpinnerFinalizarCompra />
+                  </span>
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="w-full text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                >
+                  Sign in
+                </button>
+              )}
+
               <p className="flex gap-1 justify-center text-sm font-light text-gray-500 dark:text-gray-400">
                 Aun no tiene cuenta?{" "}
                 <Link

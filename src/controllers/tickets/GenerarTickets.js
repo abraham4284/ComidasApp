@@ -1,7 +1,7 @@
 import PDF from "pdfkit-construct";
 import { pool } from "../../db.js";
 import { formatearTotal } from "../../helpers/formatearTotal.js";
-import { formatearFechas } from "../../helpers/formatearFecha.js";
+
 
 export const generarTicketVenta = async (req, res) => {
   try {
@@ -27,7 +27,7 @@ export const generarTicketVenta = async (req, res) => {
 
     const [ventas] = await pool.query(queryVentas, [id]);
     const [detalleVentas] = await pool.query(queryDetalleVentas, [id]);
-    const [ negocios ] = await pool.query(queryNegocios)
+    const [negocios] = await pool.query(queryNegocios);
 
     const {
       Npedido,
@@ -42,12 +42,12 @@ export const generarTicketVenta = async (req, res) => {
       numero,
       descripcionDomicilio,
       idDomicilios,
-      telefono
+      telefono,
     } = ventas.length > 0 ? ventas[0] : {};
 
     // const fechaFormateada = formatearFechas(fecha);
 
-    const { nombre: nombreNegocio } = negocios.length > 0 ? negocios[0] : {}  
+    const { nombre: nombreNegocio } = negocios.length > 0 ? negocios[0] : {};
 
     const domicilio =
       idDomicilios === null
@@ -63,8 +63,8 @@ export const generarTicketVenta = async (req, res) => {
 
     const doc = new PDF({
       bufferPages: true,
-      size: [250, 700], // Aumenta el tamaño para más espacio
-      margins: { top: 20, bottom: 10, left: 10, right: 10 }, // Márgenes ajustados
+      size: [226, 600], // Tamaño para papel de 80mm de ancho, altura ajustable
+      margins: { top: 10, bottom: 10, left: 10, right: 10 }, // Márgenes pequeños
     });
 
     res.writeHead(200, {
@@ -74,14 +74,18 @@ export const generarTicketVenta = async (req, res) => {
 
     doc.pipe(res);
 
+    doc.moveDown(1)
     doc.setDocumentHeader(
       { height: "15%" }, // Aumenta el tamaño del encabezado para más espacio
       () => {
-        doc.fontSize(12).text(`${nombreNegocio}`, { width: 230, align: "center" });
+        doc.fontSize(10).text(`${nombreNegocio}`, {
+          width: 206,
+          align: "center",
+        });
         doc.moveDown(0.3);
         doc.fontSize(9);
 
-        doc.text(`Nº: ${Npedido}`, { width: 230, align: "left" });
+        doc.text(`Nº: ${Npedido}`, { width: 206, align: "left" });
         doc.moveDown(0.3);
         doc.text(`Fecha y hora: ${fecha} ${hora}`, {
           width: 230,
@@ -93,11 +97,17 @@ export const generarTicketVenta = async (req, res) => {
           align: "left",
         });
         doc.moveDown(0.3);
-        doc.text(`Envio: ${domicilio}`, { width: 230, align: "left" });
+        doc.text(`Envio: ${domicilio}`, { width: 206, align: "left" });
         doc.moveDown(0.3);
-        doc.text(`Total: ${formatearTotal(totalVenta)}`, { width: 230, align: "left" });
+        doc.text(`Total: ${formatearTotal(totalVenta)}`, {
+          width: 206,
+          align: "left",
+        });
+
       }
     );
+
+    doc.moveDown(-1.3)
 
     doc.addTable(
       [
@@ -117,26 +127,32 @@ export const generarTicketVenta = async (req, res) => {
         headAlign: "center",
         headFont: "Helvetica-Bold",
         headFontSize: 6,
-        bodyFontSize: 5,
-        marginTop: 15, // Añade espacio entre el encabezado y la tabla
+        bodyFontSize: 5, // Añade espacio entre el encabezado y la tabla
       }
     );
 
-    doc.setDocumentFooter({ height: "10%" }, () => {
-      doc
-        .fontSize(8)
-        .text("Muchas gracias por su compra", 0, doc.page.height - 60, {
+    doc.setDocumentFooter(
+      {
+        height: "10%",
+      },
+      () => {
+        // Finalizar el documento añadiendo el total y el agradecimiento después de la tabla
+        doc.text("Muchas gracias por su compra", 0, doc.page.height - 400, {
           align: "center",
+          marginTop: 5,
         });
-      doc
-        .fontSize(7)
-        .text(
+
+        doc.text(
           "</> AbrahamTech | Soluciones Tecnologicas",
           0,
-          doc.page.height - 40,
-          { align: "center" }
+          doc.page.height - 380,
+          {
+            align: "center",
+            marginTop: 5,
+          }
         );
-    });
+      }
+    );
 
     doc.render();
     doc.end();

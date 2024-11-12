@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useVentas } from "../../context/VentasContext";
 import { useAuth } from "../../context/AuthContext";
 import { useProductos } from "../../context/ProductosContext";
@@ -13,6 +13,8 @@ export const SideBar = () => {
   const { ventas, getVentas, mostrarParaImprimir } = useVentas();
   const { getProductos, productos } = useProductos();
   const { logout } = useAuth();
+
+  const location = useLocation();
 
   const toggleSiderBar = () => {
     setIsOpenSideBar(!isOpenSideBar);
@@ -58,6 +60,9 @@ export const SideBar = () => {
     }
   }, [productos]);
 
+
+  
+ 
   return (
     <>
       <button

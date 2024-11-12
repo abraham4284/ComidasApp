@@ -104,6 +104,14 @@ export const CardFinalizarCompra = () => {
       return;
     }
 
+    if (!descripcion) {
+      Swal.fire({
+        title: "La descripcion es obligatoria",
+        text: "Si no desea enviar detalles de como quiere su pedido, puede colocar tres puntos '...' y se tomara que el pedido va tal cual su descripcion, gracias su atencion!",
+        icon:"warning"
+      });
+      return;
+    }
     if (
       selectedMetodoEnvio === "Envio" &&
       (selectedDomicilio === null || !domicilios)
@@ -294,7 +302,7 @@ export const CardFinalizarCompra = () => {
           className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
-          placeholder="Write your thoughts here..."
+          placeholder="Agrega los detalles de como quiere su pedido"
         ></textarea>
       </div>
       {/* End Descripcion */}

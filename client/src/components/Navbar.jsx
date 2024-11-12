@@ -35,11 +35,14 @@ export const Navbar = () => {
 
   const { img, nombre } = negocios.length > 0 ? negocios[0] : {};
 
+
   // Función para añadir una clase de estilo si la ruta coincide con la actual
   const getNavLinkClass = (path) =>
     location.pathname === path
       ? "rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
       : "rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white";
+
+      
 
   return (
     <nav className="bg-gray-800">

@@ -31,7 +31,7 @@ export const BebidasPages = () => {
 
   const filterBebidasDef = busquedaActiva ? filterBebidas : productosBebidas;
 
-  console.log(loadingBebidas, "soy loading");
+
   return (
     <section className="p-4">
       <SearchPlatos
