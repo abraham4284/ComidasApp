@@ -2,7 +2,7 @@ import React from "react";
 
 export const CardsContacto = () => {
   return (
-    <div className="font-[sans-serif] w-full mx-auto p-4 ">
+    <div className="font-[sans-serif] w-full mx-auto p-4  ">
       <h2 className="text-3xl text-gray-800 font-extrabold text-center mb-12 mt-5">
         Contactanos
       </h2>

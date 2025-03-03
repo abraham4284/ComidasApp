@@ -172,24 +172,24 @@ export const TableDomicilios = ({
                   return (
                     <tr
                       key={el.idDomicilios}
-                      className="bg-white dark:bg-gray-800"
+                      className="bg-gray-800"
                     >
                       <td
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white"
                       >
                         {el.codigoPostal}
                       </td>
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      <td className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
                         {el.calle}
                       </td>
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      <td className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
                         {el.numero}
                       </td>
-                      <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      <td className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
                         {el.descripcion}
                       </td>
-                      <td className="px-6 py-4  font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      <td className="px-6 py-4  font-medium text-white whitespace-nowrap dark:text-white">
                         <button
                           className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
                           onClick={() => editDomicilios(el)}
@@ -234,7 +234,7 @@ export const TableDomicilios = ({
                 })
               ) : (
                 <tr className="bg-white dark:bg-gray-800">
-                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  <td className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
                     Sin domicilios registrados
                   </td>
                 </tr>

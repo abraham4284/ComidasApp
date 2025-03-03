@@ -40,45 +40,45 @@ export const TableCompras = ({ data, loading }) => {
         ) : data.length > 0 ? (
           data.map((el) => {
             return (
-              <tr key={el.idVentas} className="bg-white dark:bg-gray-800">
+              <tr key={el.idVentas} className="bg-gray-800">
                 <td
                   scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  className="px-6 py-4 font-medium  whitespace-nowrap text-white"
                 >
                   {el.fecha}
                 </td>
-                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <td className="px-6 py-4 font-medium  whitespace-nowrap text-white">
                   {el.hora}
                 </td>
-                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <td className="px-6 py-4 font-medium  whitespace-nowrap text-white">
                   {el.Npedido}
                 </td>
-                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {el.estado === "Pendiente" && (
-                  <dd className="mt-1.5 text-base font-semibold text-white dark:text-white">
-                    <span className="bg-yellow-100 text-yellow-400 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-30">
-                      {el.estado}
-                    </span>
-                  </dd>
-                )}
+                <td className="px-6 py-4 font-medium  whitespace-nowrap text-white">
+                  {el.estado === "Pendiente" && (
+                    <dd className="mt-1.5 text-base font-semibold text-white dark:text-white">
+                      <span className="bg-yellow-100 text-yellow-400 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-30">
+                        {el.estado}
+                      </span>
+                    </dd>
+                  )}
 
-                {el.estado === "Completado" && (
-                  <dd className="mt-1.5 text-base font-semibold text-white dark:text-white">
-                    <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
-                      {el.estado}
-                    </span>
-                  </dd>
-                )}
+                  {el.estado === "Completado" && (
+                    <dd className="mt-1.5 text-base font-semibold text-white dark:text-white">
+                      <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+                        {el.estado}
+                      </span>
+                    </dd>
+                  )}
 
-                {el.estado === "Anulado" && (
-                  <dd className="mt-1.5 text-base font-semibold text-white dark:text-white">
-                    <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
-                      {el.estado}
-                    </span>
-                  </dd>
-                )}
+                  {el.estado === "Anulado" && (
+                    <dd className="mt-1.5 text-base font-semibold text-white dark:text-white">
+                      <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+                        {el.estado}
+                      </span>
+                    </dd>
+                  )}
                 </td>
-                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <td className="px-6 py-4 font-medium  whitespace-nowrap text-white">
                   {formatearNumero(el.totalVenta)}
                 </td>
 

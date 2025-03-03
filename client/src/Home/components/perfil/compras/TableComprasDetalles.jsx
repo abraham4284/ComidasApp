@@ -34,7 +34,7 @@ export const TableComprasDetalles = ({ data, loadingDetalles }) => {
             return (
               <tr
                 key={el.idDetalleVentas}
-                className="bg-white dark:bg-gray-800"
+                className=" dark:bg-gray-800"
               >
                 <td
                   scope="row"
@@ -63,7 +63,7 @@ export const TableComprasDetalles = ({ data, loadingDetalles }) => {
             );
           })
         ) : (
-          <tr className="bg-white dark:bg-gray-800">
+          <tr className="bg-gray-800">
             <td
               colSpan="6"
               className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"

@@ -77,10 +77,10 @@ export const ModalDomicilios = ({
         >
           <div className="relative p-4 w-full max-w-md">
             {/* Modal content */}
-            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div className="relative rounded-lg shadow bg-gray-700">
               {/* Modal header */}
               <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-xl font-semibold text-white">
                   {dataToEdit ? "Editar domicilio" : "+ Agregar un domiclio"}
                 </h3>
                 <button
@@ -111,7 +111,7 @@ export const ModalDomicilios = ({
               <div className="p-4 md:p-5">
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label className="block mb-2 text-sm font-medium text-white dark:text-white">
                       Codigo Postal
                     </label>
                     <input
@@ -119,13 +119,13 @@ export const ModalDomicilios = ({
                       name="codigoPostal"
                       value={codigoPostal}
                       onChange={onInputChange}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      className=" border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       placeholder="name@company.com"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label className="block mb-2 text-sm font-medium text-white dark:text-white">
                       Calle
                     </label>
                     <input
@@ -134,12 +134,12 @@ export const ModalDomicilios = ({
                       value={calle}
                       onChange={onInputChange}
                       placeholder="Ej: Av Libertad"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                     className=" border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label className="block mb-2 text-sm font-medium text-white dark:text-white">
                       Numero
                     </label>
                     <input
@@ -148,13 +148,13 @@ export const ModalDomicilios = ({
                       value={numero}
                       onChange={onInputChange}
                       placeholder="Ej: 1235"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      className=" border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label className="block mb-2 text-sm font-medium text-white dark:text-white">
                       Descripcion
                     </label>
                     <textarea
@@ -163,7 +163,7 @@ export const ModalDomicilios = ({
                       value={descripcion}
                       onChange={onInputChange}
                       placeholder="Agrega una descripcion de tu domicilios"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      className=" border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       required
                     />
                   </div>

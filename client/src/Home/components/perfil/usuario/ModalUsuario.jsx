@@ -9,7 +9,7 @@ const initialForm = {
   apellido: "",
   email: "",
   telefono: "",
-  password: ""
+  password: "",
 };
 
 export const ModalUsuario = ({ isOpen, closeModal, dataEditUsuarios }) => {
@@ -27,8 +27,6 @@ export const ModalUsuario = ({ isOpen, closeModal, dataEditUsuarios }) => {
 
   const { updateUsuariosPerfil } = useAuth();
 
-
-
   useEffect(() => {
     if (dataEditUsuarios) {
       const editData = {
@@ -38,7 +36,7 @@ export const ModalUsuario = ({ isOpen, closeModal, dataEditUsuarios }) => {
         apellido: dataEditUsuarios.apellido,
         email: dataEditUsuarios.email,
         telefono: dataEditUsuarios.telefono,
-        password: dataEditUsuarios.password
+        password: dataEditUsuarios.password,
       };
       setFormSate(editData);
     }
@@ -52,9 +50,9 @@ export const ModalUsuario = ({ isOpen, closeModal, dataEditUsuarios }) => {
       apellido,
       email,
       telefono,
-      password
+      password,
     };
-    await updateUsuariosPerfil(idUsuarios,data);
+    await updateUsuariosPerfil(idUsuarios, data);
     closeModal();
   };
 
@@ -69,10 +67,10 @@ export const ModalUsuario = ({ isOpen, closeModal, dataEditUsuarios }) => {
         >
           <div className="relative p-4 w-full max-w-md">
             {/* Modal content */}
-            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div className="relative rounded-lg shadow bg-gray-700">
               {/* Modal header */}
               <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-xl font-semibold text-white">
                   Editar perfil
                 </h3>
                 <button
@@ -103,7 +101,7 @@ export const ModalUsuario = ({ isOpen, closeModal, dataEditUsuarios }) => {
               <div className="p-4 md:p-5">
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label className="block mb-2 text-sm font-medium text-white dark:text-white">
                       IMG URL
                     </label>
                     <input
@@ -111,12 +109,12 @@ export const ModalUsuario = ({ isOpen, closeModal, dataEditUsuarios }) => {
                       name="img"
                       value={img}
                       onChange={onInputChange}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      className=" border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       placeholder="name@company.com"
                     />
                   </div>
                   <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label className="block mb-2 text-sm font-medium text-white  dark:text-white">
                       Nombre
                     </label>
                     <input
@@ -125,12 +123,12 @@ export const ModalUsuario = ({ isOpen, closeModal, dataEditUsuarios }) => {
                       value={nombre}
                       onChange={onInputChange}
                       placeholder="Ej: 1235"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                       className=" border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     />
                   </div>
 
                   <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label className="block mb-2 text-sm font-medium text-white dark:text-white">
                       Apellido
                     </label>
                     <input
@@ -139,11 +137,11 @@ export const ModalUsuario = ({ isOpen, closeModal, dataEditUsuarios }) => {
                       value={apellido}
                       onChange={onInputChange}
                       placeholder="Ej: Av Libertad"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                       className=" border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     />
                   </div>
                   <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label className="block mb-2 text-sm font-medium text-white dark:text-white">
                       Email
                     </label>
                     <input
@@ -152,12 +150,12 @@ export const ModalUsuario = ({ isOpen, closeModal, dataEditUsuarios }) => {
                       value={email}
                       onChange={onInputChange}
                       placeholder="Ej: 1235"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      className=" border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     />
                   </div>
 
                   <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label className="block mb-2 text-sm font-medium text-white dark:text-white">
                       Telefono
                     </label>
                     <input
@@ -166,11 +164,11 @@ export const ModalUsuario = ({ isOpen, closeModal, dataEditUsuarios }) => {
                       value={telefono}
                       onChange={onInputChange}
                       placeholder="Ej: 1235"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      className=" border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     />
                   </div>
                   <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    <label className="block mb-2 text-sm font-medium text-white dark:text-white">
                       Contraseña
                     </label>
                     <input
@@ -179,7 +177,7 @@ export const ModalUsuario = ({ isOpen, closeModal, dataEditUsuarios }) => {
                       value={password}
                       onChange={onInputChange}
                       placeholder="Ej: 1235"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      className=" border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     />
                   </div>
 

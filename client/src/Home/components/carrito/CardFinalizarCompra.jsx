@@ -157,10 +157,10 @@ export const CardFinalizarCompra = () => {
   console.log(estadoVenta);
 
   return (
-    <div className="max-w-6xl m-auto mt-5 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 md:w-full">
+    <div className="max-w-6xl m-auto mt-5 p-6 border border-gray-200 rounded-lg shadow bg-gray-800 md:w-full">
       {/* Titulo y subTotal */}
       <div className="flex justify-between">
-        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
           Total del carrito
         </h5>
         <button
@@ -293,7 +293,7 @@ export const CardFinalizarCompra = () => {
       <div>
         <label
           htmlFor=""
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-5"
+          className="block mb-2 text-sm font-medium text-white mt-5"
         >
           Agregar detalles de tu compra
         </label>

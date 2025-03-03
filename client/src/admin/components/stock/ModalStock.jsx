@@ -4,23 +4,19 @@ import { useProductos } from "../../../context/ProductosContext";
 import Swal from "sweetalert2";
 
 const initialForm = {
-  stockIngreso: "",
+  stockIngreso: 0,
   stockResultante: "",
 };
 
 export const ModalStock = ({ isOpen, closeModal, dataToEdit }) => {
-  const { stock = "" } = dataToEdit ? dataToEdit : {};
-  const {
-    stockIngreso,
-    stockResultante,
-    onInputChange,
-    onResetForm,
-    formSate,
-  } = useForm(initialForm);
+  const { stock = 0 } = dataToEdit ? dataToEdit : {}; // Asegúrate de que `stock` tenga un valor numérico por defecto
+  const { stockIngreso, onInputChange, onResetForm, formState } =
+    useForm(initialForm);
   const { updateStockProductos } = useProductos();
 
-  formSate.stockResultante =
-    stockIngreso === "" ? "" : parseFloat(stockIngreso) + parseFloat(stock);
+  // Calcula el stock resultante dinámicamente sin modificar directamente el estado
+  const calculatedStockResultante =
+    stockIngreso === "" ? stock : parseFloat(stockIngreso) + parseFloat(stock);
 
   const closeModalResetForm = () => {
     onResetForm();
@@ -36,9 +32,20 @@ export const ModalStock = ({ isOpen, closeModal, dataToEdit }) => {
       });
       return;
     }
+
+    if (stockIngreso <= 0) {
+      Swal.fire({
+        title: "El stock de ingreso no puede ser 0 o menor a 0",
+        icon: "error",
+      });
+
+      return;
+    }
+
     const data = {
-      stockResultante,
+      stockResultante: calculatedStockResultante,
     };
+
     await updateStockProductos(dataToEdit.idProductos, data);
     onResetForm();
     closeModal();
@@ -54,9 +61,7 @@ export const ModalStock = ({ isOpen, closeModal, dataToEdit }) => {
           className="fixed inset-0 z-50 flex justify-center items-center w-full h-screen bg-gray-800 bg-opacity-50"
         >
           <div className="relative p-4 w-full max-w-md">
-            {/* Modal content */}
             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-              {/* Modal header */}
               <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                   Alta de stock
@@ -85,7 +90,6 @@ export const ModalStock = ({ isOpen, closeModal, dataToEdit }) => {
                 </button>
               </div>
 
-              {/* Modal body */}
               <div className="p-4 md:p-5">
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   <div>
@@ -122,8 +126,7 @@ export const ModalStock = ({ isOpen, closeModal, dataToEdit }) => {
                     <input
                       type="number"
                       name="stockResultante"
-                      value={stockResultante}
-                      onChange={onInputChange}
+                      value={calculatedStockResultante}
                       disabled
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       placeholder="0"
